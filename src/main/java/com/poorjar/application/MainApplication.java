@@ -1,7 +1,6 @@
 package com.poorjar.application;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,11 +18,11 @@ import com.poorjar.controller.SecondController;
 @ComponentScan
 public class MainApplication
 {
-    @SuppressWarnings("resource")
+    @SuppressWarnings({ "resource", "unchecked" })
     public static void main(String[] args) throws Exception
     {
-        List components = Lists.newArrayList(MainController.class, FirstController.class, SecondController.class);
-        ApplicationContext ctx = SpringApplication.run(components.toArray(), args);
+        Object[] components = Lists.newArrayList(MainController.class, FirstController.class, SecondController.class).toArray();
+        ApplicationContext ctx = SpringApplication.run(components, args);
 
         System.out.println("************************************************");
         System.out.println("Let's inspect the beans provided by Spring Boot:");
