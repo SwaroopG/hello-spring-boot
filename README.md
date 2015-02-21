@@ -13,6 +13,7 @@
 ## Build & Run
 **gradle clean build && java -jar build/libs/hello-spring-boot-1.0.jar**
 
+## CI Details
 [![Build Status][1]][2]
 
 [1]: https://secure.travis-ci.org/SwaroopG/hello-spring-boot.png
