@@ -13,16 +13,18 @@ repositories {
 
 dependencies {
     // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web") {
+    compile ('org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE') {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-    compile("com.google.guava:guava:18.0")
-    testCompile("junit:junit")
+    compile("org.springframework.boot:spring-boot-starter-jetty:1.2.2.RELEASE")
+    compile 'org.springframework.boot:spring-boot-starter-actuator:1.2.2.RELEASE'
+    compile 'com.google.guava:guava:18.0'
+
+    testCompile 'com.restfuse:com.eclipsesource.restfuse:1.2.0'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.2.2.RELEASE'
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
 }
 
 buildscript {
@@ -30,10 +32,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+    gradleVersion = '2.3'
 }
