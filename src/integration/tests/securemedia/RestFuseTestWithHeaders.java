@@ -1,6 +1,7 @@
 package securemedia;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -12,6 +13,7 @@ import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 
+@Ignore
 @RunWith(HttpJUnitRunner.class)
 public class RestFuseTestWithHeaders
 {
@@ -21,7 +23,7 @@ public class RestFuseTestWithHeaders
     @Context
     private Response actualResponse;
 
-    @HttpTest(method = Method.GET, path = "/rightsinfo/1?sname=rightsinfo&cmd=ping", order = 1)
+    @HttpTest(method = Method.GET, path = "/", order = 1)
     public void headerTest()
     {
         System.out.println(actualResponse.getStatus());
@@ -32,16 +34,15 @@ public class RestFuseTestWithHeaders
 
     private Destination getDestination()
     {
-        Destination destination = new Destination(this, "http://localhost:8205");
+        Destination destination = new Destination(this, "http://localhost:8080");
         RequestContext context = destination.getRequestContext();
-        context.addHeader("sslclientc", "ARRIS");
-        context.addHeader("ARRIS_MSO", "ARRIS");
-        context.addHeader("BIGIPSign", "test");
+        context.addHeader("header1", "HEADER");
+        context.addHeader("header2", "HEADER");
         return destination;
     }
 
     private String getExpectedResponse()
     {
-        return "<rpksmsresp><rc>0</rc><msg>OK</msg></rpksmsresp>";
+        return "Hello Spring Boot!";
     }
 }

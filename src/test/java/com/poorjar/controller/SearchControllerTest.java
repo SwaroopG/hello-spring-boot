@@ -1,32 +1,52 @@
 package com.poorjar.controller;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Rule;
+import static com.jayway.restassured.RestAssured.expect;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.client.RestTemplate;
 
-import com.eclipsesource.restfuse.Destination;
-import com.eclipsesource.restfuse.HttpJUnitRunner;
-import com.eclipsesource.restfuse.Method;
-import com.eclipsesource.restfuse.Response;
-import com.eclipsesource.restfuse.annotation.Context;
-import com.eclipsesource.restfuse.annotation.HttpTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.common.collect.Lists;
+import com.poorjar.application.MainApplication;
+import com.poorjar.entity.SearchItem;
 
-@Ignore
-@RunWith(HttpJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = MainApplication.class)
+@WebAppConfiguration
+@IntegrationTest("server.port=9000")
 public class SearchControllerTest
 {
-    @Rule
-    public Destination destination = new Destination(this, "http://localhost:8080/search/description/swaroop");
+    private static String searchUrl = "http://localhost:9000/search/description/swaroop/";
 
-    @Context
-    private Response actualResponse;
+    RestTemplate template = new TestRestTemplate();
 
-    @HttpTest(method = Method.GET, path = "/")
-    public void testRestAPI()
+    @Test
+    public void testRequest() throws Exception
     {
-        Assert.assertEquals("Checking HTTP Response Code", 200, actualResponse.getStatus());
-        System.out.println(actualResponse.getStatus());
-        System.out.println(actualResponse.getBody());
+        String body = template.getForEntity(searchUrl, String.class).getBody();
+        HttpStatus status = template.getForEntity(searchUrl, String.class).getStatusCode();
+
+        System.out.println(body);
+        System.out.println(status.toString());
+
+        assertEquals(status, HttpStatus.OK);
+        assertThat(body, containsString(getExpectedSearchResponse()));
+    }
+
+    private String getExpectedSearchResponse() throws Exception
+    {
+        ObjectWriter ow = new ObjectMapper().writer();
+        return ow.writeValueAsString(Lists.newArrayList(new SearchItem(1, "Hello World"), new SearchItem(2, "Hello Track")));
     }
 }

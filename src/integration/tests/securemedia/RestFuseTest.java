@@ -11,19 +11,23 @@ import com.eclipsesource.restfuse.Method;
 import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.common.collect.Lists;
+import com.poorjar.entity.SearchItem;
 
 @Ignore
 @RunWith(HttpJUnitRunner.class)
 public class RestFuseTest
 {
     @Rule
-    public Destination destination = new Destination(this, "http://localhost:8205" );
-    
+    public Destination destination = new Destination(this, "http://localhost:8080");
+
     @Context
     private Response actualResponse;
 
-    @HttpTest(method = Method.GET, path = "/rightsinfo/1?sname=rightsinfo&cmd=ping")
-    public void pingTest()
+    @HttpTest(method = Method.GET, path = "/search/description/swaroop")
+    public void pingTest() throws Exception
     {
         System.out.println(actualResponse.getStatus());
         System.out.println(actualResponse.getBody());
@@ -31,8 +35,9 @@ public class RestFuseTest
         Assert.assertEquals("Expected and actual response do not match!", getExpectedResponse(), actualResponse.getBody());
     }
 
-    private String getExpectedResponse()
+    private String getExpectedResponse() throws Exception
     {
-        return "<rpksmsresp><rc>0</rc><msg>OK</msg></rpksmsresp>";
+        ObjectWriter ow = new ObjectMapper().writer();
+        return ow.writeValueAsString(Lists.newArrayList(new SearchItem(1, "Hello World"), new SearchItem(2, "Hello Track")));
     }
 }
