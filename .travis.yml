@@ -1,10 +1,4 @@
 language: java
-
-jdk:
-- oraclejdk7
-
-env:
-- TERM=dumb
-
-after_success:
-- ./gradlew cobertura coveralls
+jdk:- oraclejdk7
+env:- TERM=dumb
+after_success:- gradle cobertura coveralls
