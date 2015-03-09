@@ -1,3 +1,7 @@
+
+[![Build Status][1]][2]
+[![Coverage Status][3]][4]
+
 # Welcome to the hello-spring-boot wiki!
 
 ## Building the Project
@@ -13,8 +17,9 @@
 ## Build & Run
 **gradle clean build && java -jar build/libs/hello-spring-boot-1.0.jar**
 
-## CI Details
-[![Build Status][1]][2]
 
 [1]: https://secure.travis-ci.org/SwaroopG/hello-spring-boot.png
 [2]: http://www.travis-ci.org/SwaroopG/hello-spring-boot
+
+[3]: https://coveralls.io/repos/SwaroopG/hello-spring-boot/badge.svg
+[4]: https://coveralls.io/r/SwaroopG/hello-spring-boot
