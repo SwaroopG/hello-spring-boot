@@ -1,6 +1,14 @@
 language: java
-jdk:- oraclejdk7
 
-env:- TERM=dumb
+jdk:
+- oraclejdk7
 
-after_success:- ./gradlew cobertura coveralls
+env:
+- TERM=dumb
+
+after_success:
+- ./gradlew cobertura
+- ./coveralls.groovy
+
+after_failure:
+- ./gradlew clean check --debug
