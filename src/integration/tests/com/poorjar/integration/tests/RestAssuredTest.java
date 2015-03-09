@@ -1,4 +1,4 @@
-package securemedia;
+package com.poorjar.integration.tests;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.given;
