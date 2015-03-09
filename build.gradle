@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 
 jar {
     baseName = 'hello-spring-boot'
@@ -16,15 +18,13 @@ dependencies {
     compile ('org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE') {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("org.springframework.boot:spring-boot-starter-jetty:1.2.2.RELEASE")
+    compile 'org.springframework.boot:spring-boot-starter-jetty:1.2.2.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-actuator:1.2.2.RELEASE'
     compile 'com.google.guava:guava:18.0'
 
     testCompile 'com.restfuse:com.eclipsesource.restfuse:1.2.0'
     testCompile 'org.springframework.boot:spring-boot-starter-test:1.2.2.RELEASE'
     testCompile 'junit:junit:4.11'
-    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
 }
 
 buildscript {
@@ -32,10 +32,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.2.RELEASE'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.7'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
     }
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
+
+cobertura.coverageFormats = ['html', 'xml']
