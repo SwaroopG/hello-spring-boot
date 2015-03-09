@@ -13,7 +13,7 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 
 @RunWith(HttpJUnitRunner.class)
-public class SampleTestWithHeaders
+public class RestFuseTestWithHeaders
 {
     @Rule
     public Destination restFuse = getDestination();
