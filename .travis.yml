@@ -7,4 +7,5 @@ env:
 - TERM=dumb
 
 after_success:
-- gradle cobertura coveralls
+- gradle cobertura
+- gradle --info coveralls
