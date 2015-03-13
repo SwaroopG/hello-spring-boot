@@ -21,10 +21,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-jetty:1.2.2.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-actuator:1.2.2.RELEASE'
     compile 'com.google.guava:guava:18.0'
-    
-    // Thucydides-JBehave
-    compile 'net.thucydides:thucydides-core:0.9.275'
-    compile 'org.jbehave:jbehave-core:3.9.3'
+    compile 'org.apache.logging.log4j:log4j-api:2.2'
+    compile 'org.apache.logging.log4j:log4j-core:2.2'
     
     // REST Assured
     compile 'com.jayway.restassured:rest-assured:2.4.0'
