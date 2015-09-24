@@ -8,6 +8,7 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.poorjar.controller.CityController;
+import com.poorjar.controller.ExceptionController;
 import com.poorjar.controller.HelloController;
 import com.poorjar.controller.SearchController;
 
@@ -24,6 +25,6 @@ public class MainApplication extends SpringBootServletInitializer
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(entryPointClass, HelloController.class, SearchController.class, CityController.class);
+        return application.sources(entryPointClass, HelloController.class, SearchController.class, CityController.class, ExceptionController.class);
     }
 }
