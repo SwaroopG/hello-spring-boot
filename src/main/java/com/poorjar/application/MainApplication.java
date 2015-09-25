@@ -12,6 +12,13 @@ import com.poorjar.controller.ExceptionController;
 import com.poorjar.controller.HelloController;
 import com.poorjar.controller.SearchController;
 
+/**
+ * To run this application use <code>gradle clean build && java -jar build/libs/hello-spring-boot-1.0.jar</code>
+ * <p/>
+ * To run with XRebel use <code>java -javaagent:/Users/Swaroop/Software/xrebel/xrebel.jar -jar build/libs/hello-spring-boot-1.0.jar</code>
+ * <p/>
+ * @author Swaroop
+ */
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.poorjar")
@@ -19,12 +26,15 @@ public class MainApplication extends SpringBootServletInitializer
 {
     private static Class<MainApplication> entryPointClass = MainApplication.class;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         SpringApplication.run(entryPointClass, args);
     }
 
     @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(entryPointClass, HelloController.class, SearchController.class, CityController.class, ExceptionController.class);
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
+    {
+        return application.sources(entryPointClass, HelloController.class, SearchController.class, CityController.class,
+                ExceptionController.class);
     }
 }
