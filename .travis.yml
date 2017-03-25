@@ -1,11 +1,11 @@
-language: java
-
+language:
+    java
 jdk:
-- oraclejdk7
-
+    - oraclejdk8
 env:
-- TERM=dumb
-
+    - TERM=dumb
+install:
+    true
 after_success:
-- gradle cobertura
-- gradle --info coveralls
+    - gradle cobertura coveralls
+
