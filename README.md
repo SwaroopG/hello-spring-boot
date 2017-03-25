@@ -17,6 +17,10 @@
 ## Build & Run
 **gradle clean build && java -jar build/libs/hello-spring-boot-1.0.jar**
 
+## Docker Build
+gradle clean build buildDocker
+docker run -p 8080:8080 -e jasypt.encryptor.password=<any password> -e spring.profiles.active="dev" hello-spring-boot:latest
+
 
 [1]: https://secure.travis-ci.org/SwaroopG/hello-spring-boot.png
 [2]: http://www.travis-ci.org/SwaroopG/hello-spring-boot

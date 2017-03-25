@@ -1,0 +1,5 @@
+FROM java:8
+VOLUME /tmp
+ADD hello-spring-boot-2.0-SNAPSHOT.jar /hello-spring-boot.jar
+RUN sh -c 'touch /  hello-spring-boot.jar'
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /hello-spring-boot.jar" ]

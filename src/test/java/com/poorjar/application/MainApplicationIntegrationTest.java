@@ -1,37 +1,31 @@
 package com.poorjar.application;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = MainApplication.class)
-@WebAppConfiguration
-@IntegrationTest("server.port=9000")
-public final class MainApplicationIntegrationTest
-{
-    RestTemplate template = new TestRestTemplate();
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public final class MainApplicationIntegrationTest {
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @Test
-    public void testRequest() throws Exception
-    {
-        String body = template.getForEntity("http://localhost:9000", String.class).getBody();
-        HttpStatus status = template.getForEntity("http://localhost:9000", String.class).getStatusCode();
+    public void testRequest() throws Exception {
+        String body = this.restTemplate.getForObject("/", String.class);
+        HttpStatus status = this.restTemplate.getForEntity("/", String.class).getStatusCode();
 
         System.out.println(body);
         System.out.println(status.toString());
 
         assertEquals(status, HttpStatus.OK);
-        assertThat(body, containsString("Hello Spring Boot!"));
+        assertThat(body).isEqualTo("Hello Spring Boot!");
     }
 }

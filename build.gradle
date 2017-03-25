@@ -1,53 +1,69 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'spring-boot'
 apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
 
 jar {
     baseName = 'hello-spring-boot'
-    version =  '1.0'
+    version =  '2.0-SNAPSHOT'
 }
 
-repositories { mavenCentral() }
+repositories {
+    mavenCentral()
+    jcenter()
+}
 
 dependencies {
-    // tag::jetty[]
-    compile ('org.springframework.boot:spring-boot-starter-web:1.2.2.RELEASE') {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    compile 'org.springframework.boot:spring-boot-starter-jetty:1.2.2.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-actuator:1.2.6.RELEASE'
-    
+    compile 'org.springframework.boot:spring-boot-starter-web:1.5.2.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-actuator:1.5.2.RELEASE'
+
     // Hibernate dependencies
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.2.6.RELEASE'
-    compile 'com.h2database:h2:1.4.189'
-    
-    compile 'com.google.guava:guava:18.0'
-    compile 'org.apache.logging.log4j:log4j-api:2.2'
-    compile 'org.apache.logging.log4j:log4j-core:2.2'
-    
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.5.2.RELEASE'
+    compile 'com.h2database:h2:1.4.194'
+
+    compile 'com.google.guava:guava:21.0'
+    compile 'org.apache.logging.log4j:log4j-api:2.8.1'
+    compile 'org.apache.logging.log4j:log4j-core:2.8.1'
+
 
     // REST Assured
-    compile 'com.jayway.restassured:rest-assured:2.4.0'
-
-    // RESTFUSE
-    testCompile 'com.restfuse:com.eclipsesource.restfuse:1.2.0'
+    compile 'io.rest-assured:rest-assured:3.0.2'
 
     // Test dependencies
-    testCompile 'org.springframework.boot:spring-boot-starter-test:1.2.6.RELEASE'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.5.2.RELEASE'
     testCompile 'junit:junit:4.12'
 }
 
 buildscript {
-    repositories { mavenCentral() }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.6.RELEASE'
-        classpath 'net.saliman:gradle-cobertura-plugin:2.2.7'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.3.1'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.4.0'
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
     }
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.3' }
+task wrapper(type: Wrapper) { gradleVersion = '3.4.1' }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
