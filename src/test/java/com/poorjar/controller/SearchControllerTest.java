@@ -33,7 +33,7 @@ public class SearchControllerTest {
         ResponseEntity<String> response = template.getForEntity("/", String.class);
 
         LOGGER.info("********Response" + response);
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertThat(response.getBody(), equalTo("Hello Spring Boot!"));
     }
 
@@ -42,7 +42,7 @@ public class SearchControllerTest {
         ResponseEntity<String> response = template.getForEntity("/search/description/swaroop/", String.class);
 
         LOGGER.info("********Response" + response);
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertThat(response.getBody(), containsString(getExpectedSearchResponse()));
     }
 

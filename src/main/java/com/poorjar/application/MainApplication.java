@@ -1,38 +1,20 @@
 package com.poorjar.application;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
-
-import com.poorjar.controller.CityController;
-import com.poorjar.controller.ExceptionController;
-import com.poorjar.controller.HelloController;
-import com.poorjar.controller.SearchController;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * To run this application use <code>gradle clean build && java -jar build/libs/hello-spring-boot-1.0.jar</code>
- * <p/>
  * @author Swaroop
  */
 @SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan(basePackages = "com.poorjar")
-public class MainApplication extends SpringBootServletInitializer
-{
-    private static Class<MainApplication> entryPointClass = MainApplication.class;
-
-    public static void main(String[] args)
-    {
-        SpringApplication.run(entryPointClass, args);
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
-    {
-        return application.sources(entryPointClass, HelloController.class, SearchController.class, CityController.class,
-                ExceptionController.class);
+@ComponentScan("com.poorjar")
+@EntityScan("com.poorjar.entity")
+@EnableJpaRepositories("com.poorjar.repository")
+public class MainApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MainApplication.class, args);
     }
 }

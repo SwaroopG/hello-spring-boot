@@ -33,7 +33,7 @@ public class RestAssuredTest
     }
 
     @Test
-    public void searchTest() throws Exception
+    public void searchTest()
     {
         expect().statusCode(200).when().get(searchUrl);
         expect().body(containsString(getExpectedSearchResponse())).when().get(searchUrl);
@@ -41,10 +41,10 @@ public class RestAssuredTest
 
     private String expectedResponse()
     {
-        return "Hello Spring Boot!";
+        return "Hello Spring Boot!"; //NOSONAR
     }
 
-    private String getExpectedSearchResponse() throws Exception
+    private String getExpectedSearchResponse()
     {
         ObjectWriter ow = new ObjectMapper().writer();
         return ow.writeValueAsString(Lists.newArrayList(new SearchItem(1, "Hello World"), new SearchItem(2, "Hello Track")));

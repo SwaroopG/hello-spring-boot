@@ -27,7 +27,7 @@ public class RestFuseTest
     private Response actualResponse;
 
     @HttpTest(method = Method.GET, path = "/search/description/swaroop")
-    public void pingTest() throws Exception
+    public void pingTest()
     {
         System.out.println(actualResponse.getStatus());
         System.out.println(actualResponse.getBody());
@@ -35,7 +35,7 @@ public class RestFuseTest
         Assert.assertEquals("Expected and actual response do not match!", getExpectedResponse(), actualResponse.getBody());
     }
 
-    private String getExpectedResponse() throws Exception
+    private String getExpectedResponse()
     {
         ObjectWriter ow = new ObjectMapper().writer();
         return ow.writeValueAsString(Lists.newArrayList(new SearchItem(1, "Hello World"), new SearchItem(2, "Hello Track")));

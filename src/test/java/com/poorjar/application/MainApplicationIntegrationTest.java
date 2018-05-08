@@ -25,7 +25,7 @@ public final class MainApplicationIntegrationTest {
         System.out.println(body);
         System.out.println(status.toString());
 
-        assertEquals(status, HttpStatus.OK);
+        assertEquals(HttpStatus.OK, status);
         assertThat(body).isEqualTo("Hello Spring Boot!");
     }
 }

@@ -1,7 +1,13 @@
-/build/
-/bin/
-/.settings/
-/.gradle/
-/.classpath
-/.project
-/.idea
+# Intellij project files
+*.iml
+.idea/
+
+# Gradle
+.gradle/
+build/
+bin/
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+
+# General
+.DS_Store
